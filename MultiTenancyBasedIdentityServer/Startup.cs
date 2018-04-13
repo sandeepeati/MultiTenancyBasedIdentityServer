@@ -37,6 +37,15 @@ namespace MultiTenancyBasedIdentityServer
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
+
+            // configuring identity server
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryPersistedGrants()
+                .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                .AddInMemoryApiResources(Config.GetApiResources())
+                .AddInMemoryClients(Config.GetClients())
+                .AddAspNetIdentity<ApplicationUser>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,7 +64,9 @@ namespace MultiTenancyBasedIdentityServer
 
             app.UseStaticFiles();
 
-            app.UseAuthentication();
+            // not needed since IdentityServer adds the authentication middleware
+            // app.UseAuthentication(); 
+            app.UseIdentityServer();
 
             app.UseMvc(routes =>
             {

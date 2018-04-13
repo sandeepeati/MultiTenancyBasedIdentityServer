@@ -36,7 +36,9 @@ namespace MultiTenancyBasedIdentityServer
                 {
                     ClientId = "mvc",
                     ClientName = "MVC Client",
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
+
+                    RequireConsent = false,
 
                     ClientSecrets =
                     {
